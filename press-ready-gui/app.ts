@@ -16,12 +16,15 @@ import {
     alert,
     pickerAddItem,
     widgetSetHidden,
-    widgetSetHeight,
+    widgetMatchParentHeight,
     textareaSetString,
     textSetString,
     textSetFontSize,
     textSetFontFamily,
     textSetColor,
+    setPadding,
+    appSetMinSize,
+    appSetMaxSize,
 } from "perry/ui"
 import { spawn, execSync } from "child_process"
 import { writeFileSync, unlinkSync, existsSync } from "fs"
@@ -127,7 +130,7 @@ function buildGsArgs(outputPath: string, grayScale: boolean, enforceOutline: boo
 // ── Log state ──
 const logLines = State<string[]>([])
 const logArea = TextArea("", (_: string) => {})
-widgetSetHeight(logArea, 280)
+widgetMatchParentHeight(logArea)
 
 function log(...lines: string[]) {
     const cur = logLines.value.slice()
@@ -315,33 +318,37 @@ function pickOutput() {
     }, "output", "pdf")
 }
 
+appSetMinSize(600, 500)
+appSetMaxSize(1200, 1000)
+
 App({
     title: "press-ready build",
     width: 760,
     height: 640,
-    body: VStack(16, [
-        heading,
-        depCheck,
-        Divider(),
+    body: (() => {
+        const root = VStack(16, [
+            heading,
+            depCheck,
+            Divider(),
 
-        HStack(8, [inputLabel, Spacer()]),
-        HStack(8, [inputPathLabel, Button("Browse Input...", () => pickInput())]),
+            HStack(8, [inputLabel, inputPathLabel, Spacer(), Button("Browse Input...", () => pickInput())]),
+            HStack(8, [outputLabel, outputPathLabel, Spacer(), Button("Browse Output...", () => pickOutput())]),
 
-        HStack(8, [outputLabel, Spacer()]),
-        HStack(8, [outputPathLabel, Button("Browse Output...", () => pickOutput())]),
+            Divider(),
+            grayToggle,
+            outlinePicker,
+            boundaryToggle,
 
-        Divider(),
-        grayToggle,
-        outlinePicker,
-        boundaryToggle,
+            Divider(),
+            statusLabel,
+            Button("Start Build", () => startBuild()),
 
-        Divider(),
-        statusLabel,
-        Button("Start Build", () => startBuild()),
-
-        Divider(),
-        Text("Build Log"),
-        logArea,
-        progress,
-    ]),
+            Divider(),
+            Text("Build Log"),
+            logArea,
+            progress,
+        ])
+        setPadding(root, 16, 16, 16, 16)
+        return root
+    })(),
 })
