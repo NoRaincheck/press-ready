@@ -76,6 +76,7 @@ export async function ghostScript({
     '-dMonoImageResolution=600',
     '-dColorImageResolution=600',
     `-sOutputFile=${outputPath}`,
+    '-dNOSAFER',
   ]
   if (boundaryBoxes) {
     gsOptions.push('-dUseCropBox', '-dUseTrimBox', '-dUseBleedBox')
