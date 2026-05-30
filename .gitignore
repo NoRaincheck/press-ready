@@ -82,3 +82,8 @@ typings/
 .serverless
 
 # End of https://www.gitignore.io/api/node
+
+# Perry native app (press-ready-gui)
+press-ready-gui/press-ready-gui
+press-ready-gui/.perry-cache/
+press-ready-gui/assets/
