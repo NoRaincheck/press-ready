@@ -1,4 +1,4 @@
-build:
+build: clean
     npm run build
     npm run build --prefix press-ready-gui
 
