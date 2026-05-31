@@ -1,8 +1,4 @@
-<h1 align="center">
-  🚀 press-ready
-  <br/>
-  <img alt="screencast" src="https://github.com/vibranthq/press-ready/blob/master/.github/screencast.gif?raw=true">
-</h1>
+# press-ready
 
 > This is a fork of [vibranthq/press-ready](https://github.com/vibranthq/press-ready).
 
