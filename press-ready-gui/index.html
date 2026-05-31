@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>press-ready build</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="heading">press-ready build</div>
+
+      <div class="dep-check" id="dep-check">
+        <span id="gs-status">…</span> Ghostscript &nbsp;|&nbsp;
+        <span id="pf-status">…</span> pdffonts
+      </div>
+
+      <hr />
+
+      <div class="file-row">
+        <span class="label">Input PDF:</span>
+        <span class="path" id="input-path">(no file selected)</span>
+        <span class="spacer"></span>
+        <button id="btn-input">Browse Input…</button>
+      </div>
+      <div class="file-row">
+        <span class="label">Output PDF:</span>
+        <span class="path" id="output-path">output.pdf</span>
+        <span class="spacer"></span>
+        <button id="btn-output">Browse Output…</button>
+      </div>
+
+      <hr />
+
+      <label class="toggle-row">
+        <input type="checkbox" id="chk-grayscale" />
+        Gray-scale
+      </label>
+
+      <div class="picker-row">
+        <label for="sel-outline">Enforce outline:</label>
+        <select id="sel-outline">
+          <option value="0" selected>Auto</option>
+          <option value="1">Yes</option>
+          <option value="2">No</option>
+        </select>
+      </div>
+
+      <label class="toggle-row">
+        <input type="checkbox" id="chk-boundary" />
+        Boundary boxes
+      </label>
+
+      <hr />
+
+      <div class="action-row">
+        <span class="status" id="status">Status: Ready</span>
+        <span class="spacer"></span>
+        <button id="btn-build" class="primary">Start Build</button>
+      </div>
+
+      <div id="progress-container" style="display:none">
+        <progress id="progress-bar" max="100" value="0"></progress>
+      </div>
+
+      <hr />
+
+      <div class="log-label">Build Log</div>
+      <textarea id="log-area" readonly></textarea>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
