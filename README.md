@@ -4,6 +4,8 @@
   <img alt="screencast" src="https://github.com/vibranthq/press-ready/blob/master/.github/screencast.gif?raw=true">
 </h1>
 
+> This is a fork of [vibranthq/press-ready](https://github.com/vibranthq/press-ready).
+
 > Make your PDF compliant with press-ready PDF/X-1a.
 
 ![npm: version](https://badgen.net/npm/v/press-ready)
@@ -11,8 +13,6 @@
 [![Build Status](https://travis-ci.com/vibranthq/press-ready.svg?branch=master)](https://travis-ci.com/vibranthq/press-ready)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2c6709d994ab4526af91d11f9ef77193)](https://www.codacy.com/gh/vibranthq/press-ready?utm_source=github.com&utm_medium=referral&utm_content=vibranthq/press-ready&utm_campaign=Badge_Grade)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/vibranthq/press-ready.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/vibranthq/press-ready/alerts/)
-
-[🇯🇵 日本語](README.ja.md)
 
 ## Table of Contents
 
