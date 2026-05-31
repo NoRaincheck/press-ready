@@ -39,7 +39,9 @@ html, body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
   color: var(--text);
   padding: 16px;
   user-select: none;
@@ -53,14 +55,14 @@ body {
 }
 
 .heading {
-  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
   font-size: 22px;
   font-weight: 600;
   color: var(--text);
 }
 
 .dep-check {
-  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
   font-size: 11px;
   color: var(--subtext1);
 }
@@ -85,7 +87,7 @@ hr {
 
 .path {
   color: var(--overlay1);
-  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
   font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -131,7 +133,7 @@ button.primary:active {
   cursor: default;
 }
 
-.toggle-row input[type='checkbox'] {
+.toggle-row input[type="checkbox"] {
   accent-color: var(--blue);
 }
 
@@ -194,6 +196,14 @@ button.primary:active {
   border-radius: 3px;
 }
 
+#page-progress {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 11px;
+  color: var(--subtext0);
+  display: block;
+  margin-top: 2px;
+}
+
 .log-label {
   font-weight: 500;
   color: var(--subtext0);
@@ -202,7 +212,7 @@ button.primary:active {
 #log-area {
   width: 100%;
   height: 200px;
-  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
   font-size: 11px;
   background: var(--mantle);
   border: 1px solid var(--surface1);

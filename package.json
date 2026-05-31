@@ -58,9 +58,9 @@
       "git add"
     ]
   },
-  "homepage": "https://github.com/vibranthq/press-ready",
-  "repository": "https://github.com/vibranthq/press-ready.git",
-  "bugs": "https://github.com/vibranthq/press-ready/issues",
+  "homepage": "https://github.com/NoRaincheck/press-ready",
+  "repository": "https://github.com/NoRaincheck/press-ready.git",
+  "bugs": "https://github.com/NoRaincheck/press-ready/issues",
   "license": "Apache-2.0",
   "keywords": [
     "press-ready",

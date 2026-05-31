@@ -1,7 +1,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::fs;
-use std::process::Command;
+use std::io::{BufRead, BufReader, Read};
+use std::process::{Command, Stdio};
+use std::thread;
 
 use serde::Serialize;
 
@@ -53,6 +55,20 @@ struct ConvertResult {
     stderr: String,
 }
 
+fn count_pages(path: &str) -> i32 {
+    if let Ok(output) = Command::new("pdfinfo").arg(path).output() {
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        for line in stdout.lines() {
+            if let Some(rest) = line.strip_prefix("Pages:") {
+                if let Ok(n) = rest.trim().parse::<i32>() {
+                    return n;
+                }
+            }
+        }
+    }
+    0
+}
+
 #[tauri::command]
 fn check_dependencies() -> DepStatus {
     let gs = Command::new("gs")
@@ -90,6 +106,7 @@ fn run_pdffonts(file_path: String) -> Result<String, String> {
 
 #[tauri::command]
 fn convert_pdf(
+    window: tauri::Window,
     input: String,
     output: String,
     grayscale: bool,
@@ -160,20 +177,70 @@ fn convert_pdf(
     }
 
     args.push(ps_str);
-    args.push(input);
+    args.push(input.clone());
 
-    let result = Command::new("gs")
+    // Count pages and emit initial event
+    let total_pages = count_pages(&input);
+    let _ = window.emit("progress", serde_json::json!({"current": 0, "total": total_pages}));
+
+    // Spawn GS with piped output for streaming progress
+    let mut child = Command::new("gs")
         .args(&args)
-        .output()
-        .map_err(|e| format!("run gs: {}", e))?;
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|e| format!("spawn gs: {}", e))?;
+
+    let stderr = child.stderr.take().unwrap();
+    let stdout = child.stdout.take().unwrap();
+
+    let window_clone = window.clone();
+    let total_pages_clone = total_pages;
+    let stderr_handle = thread::spawn(move || {
+        let reader = BufReader::new(stderr);
+        let mut collected = String::new();
+        let mut current_page: i32 = 0;
+        for line in reader.lines() {
+            if let Ok(line) = line {
+                collected.push_str(&line);
+                collected.push('\n');
+
+                let trimmed = line.trim();
+                if let Some(num) = trimmed
+                    .strip_prefix("Page")
+                    .and_then(|s| s.trim().parse::<i32>().ok())
+                {
+                    current_page = num;
+                    let _ = window_clone.emit(
+                        "progress",
+                        serde_json::json!({
+                            "current": current_page,
+                            "total": total_pages_clone,
+                        }),
+                    );
+                }
+            }
+        }
+        collected
+    });
+
+    let stdout_handle = thread::spawn(move || {
+        let mut s = String::new();
+        let _ = BufReader::new(stdout).read_to_string(&mut s);
+        s
+    });
+
+    let exit_status = child.wait().map_err(|e| format!("wait gs: {}", e))?;
+    let collected_stderr = stderr_handle.join().map_err(|_| "stderr thread panicked".to_string())?;
+    let collected_stdout = stdout_handle.join().map_err(|_| "stdout thread panicked".to_string())?;
 
     let _ = fs::remove_file(&icc_path);
     let _ = fs::remove_file(&ps_path);
 
     Ok(ConvertResult {
-        exit_code: result.status.code().unwrap_or(-1),
-        stdout: String::from_utf8_lossy(&result.stdout).to_string(),
-        stderr: String::from_utf8_lossy(&result.stderr).to_string(),
+        exit_code: exit_status.code().unwrap_or(-1),
+        stdout: collected_stdout,
+        stderr: collected_stderr,
     })
 }
 
