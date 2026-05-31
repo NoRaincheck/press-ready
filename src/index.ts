@@ -1,4 +1,4 @@
-export { pdfFonts, pdfInfo, isPdfFontsAvailable } from './pdffonts'
+export { isPdfFontsAvailable, pdfFonts, pdfInfo } from './pdffonts'
 export { ghostScript, isGhostscriptAvailable } from './ghostScript'
 export { inspectPDF } from './inspectPDF'
 export { build } from './commands/build'

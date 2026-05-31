@@ -51,6 +51,7 @@ Three Tauri commands invoked from JS via `@tauri-apps/api`:
 ## Frontend (`press-ready-gui/src/main.js`)
 
 Uses `@tauri-apps/api` imports:
+
 - `invoke` from `@tauri-apps/api/tauri` for Rust commands
 - `open`/`save` from `@tauri-apps/api/dialog` for native file dialogs
 

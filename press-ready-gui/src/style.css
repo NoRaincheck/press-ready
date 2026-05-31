@@ -131,7 +131,7 @@ button.primary:active {
   cursor: default;
 }
 
-.toggle-row input[type="checkbox"] {
+.toggle-row input[type='checkbox'] {
   accent-color: var(--blue);
 }
 

@@ -37,4 +37,3 @@ Requires the same system dependencies (`brew install poppler ghostscript`).
 - `--gray-scale` — convert to grayscale
 - `--boundary-boxes` — add TrimBox, CropBox, BleedBox
 - `--enforce-outline` / `--no-enforce-outline` — control font outlining
-

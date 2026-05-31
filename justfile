@@ -9,3 +9,9 @@ test-lint: build
 
 clean:
     npm run clean
+
+fmt:
+    deno fmt
+
+fmt-check:
+    deno fmt --check

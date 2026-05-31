@@ -92,7 +92,7 @@ export async function pdfFonts(filePath: string): Promise<PDFFontsResponse> {
     return line
       .substring(
         counter[columns.indexOf(column) - 1] + extraPad || 0,
-        counter[columns.indexOf(column)] + extraPad
+        counter[columns.indexOf(column)] + extraPad,
       )
       .trim()
   }
@@ -102,7 +102,7 @@ export async function pdfFonts(filePath: string): Promise<PDFFontsResponse> {
       {},
       ...columns.map((column) => ({
         [column]: scraper(line, column),
-      }))
+      })),
     )
   )
   return { rawResponse: result, fonts }
@@ -115,7 +115,7 @@ export async function pdfInfo(filePath: string) {
     {},
     ...lines
       .map((line) => line.split(/:\s+/))
-      .map((arr) => ({ [arr[0]]: arr[1] }))
+      .map((arr) => ({ [arr[0]]: arr[1] })),
   )
   const result = {} as Result
 
@@ -126,7 +126,7 @@ export async function pdfInfo(filePath: string) {
       {},
       ...rawResult[column].split(/\s+/).map((val, i) => ({
         [labels[i] as BoundaryParamKey]: parseFloat(val),
-      }))
+      })),
     )
   }
 

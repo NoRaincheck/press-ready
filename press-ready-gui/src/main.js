@@ -166,11 +166,15 @@ async function startBuild() {
 $('btn-input').addEventListener('click', pickInput)
 $('btn-output').addEventListener('click', pickOutput)
 $('btn-build').addEventListener('click', startBuild)
-$('chk-grayscale').addEventListener('change', (e) => { grayscale = e.target.checked })
-$('chk-boundary').addEventListener('change', (e) => { boundaryBoxes = e.target.checked })
-$('sel-outline').addEventListener('change', (e) => { outlineMode = parseInt(e.target.value, 10) })
-
-// Initial dependency check
+$('chk-grayscale').addEventListener('change', (e) => {
+  grayscale = e.target.checked
+})
+$('chk-boundary').addEventListener('change', (e) => {
+  boundaryBoxes = e.target.checked
+})
+$('sel-outline').addEventListener('change', (e) => {
+  outlineMode = parseInt(e.target.value, 10)
+}) // Initial dependency check
 ;(async () => {
   try {
     const deps = await invoke('check_dependencies')

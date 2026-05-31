@@ -48,10 +48,7 @@ Windows:
   const resolvedOutput = path.resolve(args.output)
   log(`Listing fonts in '${args.input}'`)
   const { shouldEnforceOutline } = await inspectPDF(resolvedInput)
-  const isEnforceOutline =
-    args['enforce-outline'] !== undefined
-      ? args['enforce-outline']
-      : shouldEnforceOutline
+  const isEnforceOutline = args['enforce-outline'] !== undefined ? args['enforce-outline'] : shouldEnforceOutline
   log('Generating PDF')
   const table = new Table(tableArgs)
   table.push(
@@ -64,20 +61,18 @@ Windows:
     {
       'Color Mode': args['gray-scale']
         ? chalk.white('Gray')
-        : `${chalk.cyan('C')}${chalk.red('M')}${chalk.yellow('Y')}${chalk.white(
-            'K'
-          )}`,
+        : `${chalk.cyan('C')}${chalk.red('M')}${chalk.yellow('Y')}${
+          chalk.white(
+            'K',
+          )
+        }`,
     },
     {
-      'Enforce outline': isEnforceOutline
-        ? chalk.green('yes')
-        : chalk.red('no'),
+      'Enforce outline': isEnforceOutline ? chalk.green('yes') : chalk.red('no'),
     },
     {
-      'Boundary boxes': args['boundary-boxes']
-        ? chalk.green('yes')
-        : chalk.red('no'),
-    }
+      'Boundary boxes': args['boundary-boxes'] ? chalk.green('yes') : chalk.red('no'),
+    },
   )
   rawLog(table.toString())
   const gsResult = await ghostScript({

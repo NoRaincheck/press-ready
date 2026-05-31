@@ -56,10 +56,9 @@ export async function ghostScript({
   fs.writeFileSync(pdfxDefPath, pdfxDef, 'utf-8')
 
   // configure gs command
-  const gsCommand =
-    (process.platform === 'win32' &&
-      ((shell.which('gswin64c') && 'gswin64c') ||
-        (shell.which('gswin32c') && 'gswin32c'))) ||
+  const gsCommand = (process.platform === 'win32' &&
+    ((shell.which('gswin64c') && 'gswin64c') ||
+      (shell.which('gswin32c') && 'gswin32c'))) ||
     'gs'
   const gsOptions = [
     '-dPDFX',
@@ -91,7 +90,7 @@ export async function ghostScript({
     gsOptions.push(
       '-sProcessColorModel=DeviceGray',
       '-sColorConversionStrategy=Gray',
-      '-sColorConversionStrategyForImages=Gray'
+      '-sColorConversionStrategyForImages=Gray',
     )
   } else {
     gsOptions.push(
@@ -99,7 +98,7 @@ export async function ghostScript({
       '-sColorConversionStrategy=CMYK',
       '-sColorConversionStrategyForImages=CMYK',
       '-dOverrideICC',
-      `-sOutputICCProfile=${iccProfilePath}`
+      `-sOutputICCProfile=${iccProfilePath}`,
     )
   }
 
