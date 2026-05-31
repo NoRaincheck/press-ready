@@ -1,0 +1,9 @@
+[[repos]]
+repo = "local"
+
+  [[repos.hooks]]
+  id = "deno-fmt"
+  name = "deno fmt"
+  entry = "deno fmt --check"
+  language = "system"
+  types_or = ["javascript", "jsx", "ts", "tsx", "json", "markdown", "css", "html", "yaml"]
