@@ -1,5 +1,6 @@
 build:
     npm run build
+    npm run build --prefix press-ready-gui
 
 test: build
     npm test
