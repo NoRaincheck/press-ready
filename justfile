@@ -1,6 +1,7 @@
 build: clean
     npm run build
-    npm run build --prefix press-ready-gui
+    cd press-ready-gui && npm run tauri build
+    @echo "GUI bundle: press-ready-gui/src-tauri/target/release/bundle/"
 
 test: build
     npm test
