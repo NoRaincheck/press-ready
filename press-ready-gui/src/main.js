@@ -186,7 +186,8 @@ async function startBuild() {
 
       const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
       const avg = totalPages > 0 ? (elapsed / totalPages).toFixed(2) : "-";
-      stats.textContent = `Pages: ${totalPages}  |  Time: ${elapsed}s  |  Avg: ${avg}s/page`;
+      stats.textContent =
+        `Pages: ${totalPages}  |  Time: ${elapsed}s  |  Avg: ${avg}s/page`;
     }
 
     if (result.stderr && result.exit_code !== 0) {
