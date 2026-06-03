@@ -7,6 +7,8 @@ let outputPath = "";
 let grayscale = false;
 let boundaryBoxes = false;
 let outlineMode = 0;
+let totalPages = 0;
+let startTime = 0;
 
 const $ = (id) => document.getElementById(id);
 
@@ -17,6 +19,7 @@ const statusLabel = $("status");
 const progressContainer = $("progress-container");
 const progressBar = $("progress-bar");
 const pageProgress = $("page-progress");
+const stats = $("stats");
 const gsStatus = $("gs-status");
 const pfStatus = $("pf-status");
 const spinner = $("spinner");
@@ -90,10 +93,12 @@ async function startBuild() {
 
   spinner.classList.add("active");
   logArea.value = "";
+  stats.textContent = "";
   statusLabel.textContent = "Status: Building…";
   progressContainer.style.display = "block";
   progressBar.value = 0;
 
+  startTime = performance.now();
   log("==> press-ready build started");
   log("==> Input: " + inputPath);
   log("==> Output: " + outputPath);
@@ -140,6 +145,7 @@ async function startBuild() {
 
     const unlisten = await listen("progress", (event) => {
       const { current, total } = event.payload;
+      totalPages = total;
       const pct = total > 0 ? 30 + (current / total) * 50 : 30;
       progressBar.value = Math.min(pct, 80);
       pageProgress.textContent = total > 0
@@ -177,6 +183,10 @@ async function startBuild() {
       }
       log("==> Build complete ✓");
       progressBar.value = 100;
+
+      const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
+      const avg = totalPages > 0 ? (elapsed / totalPages).toFixed(2) : "-";
+      stats.textContent = `Pages: ${totalPages}  |  Time: ${elapsed}s  |  Avg: ${avg}s/page`;
     }
 
     if (result.stderr && result.exit_code !== 0) {

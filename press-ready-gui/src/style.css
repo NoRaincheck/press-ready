@@ -229,6 +229,14 @@ button.primary:active {
   color: var(--subtext0);
 }
 
+#stats {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 11px;
+  color: var(--green);
+  display: block;
+  margin-top: 2px;
+}
+
 #log-area {
   width: 100%;
   height: 200px;

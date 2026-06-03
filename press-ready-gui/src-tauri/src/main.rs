@@ -53,6 +53,7 @@ struct ConvertResult {
     exit_code: i32,
     stdout: String,
     stderr: String,
+    total_pages: i32,
 }
 
 fn count_pages(path: &str) -> i32 {
@@ -237,6 +238,7 @@ fn convert_pdf(
         exit_code: exit_status.code().unwrap_or(-1),
         stdout: collected_stdout,
         stderr: collected_stderr,
+        total_pages,
     })
 }
 
