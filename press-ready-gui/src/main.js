@@ -19,6 +19,7 @@ const progressBar = $("progress-bar");
 const pageProgress = $("page-progress");
 const gsStatus = $("gs-status");
 const pfStatus = $("pf-status");
+const spinner = $("spinner");
 
 function log(...lines) {
   for (const line of lines) {
@@ -59,7 +60,6 @@ async function pickInput() {
 
   inputPath = path;
   inputPathLabel.textContent = path;
-  inputPathLabel.style.color = "#000";
 
   if (!outputPath || outputPath === "output.pdf") {
     const idx = path.lastIndexOf("/");
@@ -70,7 +70,6 @@ async function pickInput() {
       : path.substring(idx + 1);
     outputPath = dir + "/" + name + "-print-ready.pdf";
     outputPathLabel.textContent = outputPath;
-    outputPathLabel.style.color = "#000";
   }
 }
 
@@ -81,7 +80,6 @@ async function pickOutput() {
   if (!path) return;
   outputPath = path;
   outputPathLabel.textContent = path;
-  outputPathLabel.style.color = "#000";
 }
 
 async function startBuild() {
@@ -90,6 +88,7 @@ async function startBuild() {
     return;
   }
 
+  spinner.classList.add("active");
   logArea.value = "";
   statusLabel.textContent = "Status: Building…";
   progressContainer.style.display = "block";
@@ -150,8 +149,9 @@ async function startBuild() {
         : "";
     });
 
+    let result;
     try {
-      const result = await invoke("convert_pdf", {
+      result = await invoke("convert_pdf", {
         input: inputPath,
         output: outputPath,
         grayscale,
@@ -194,6 +194,7 @@ async function startBuild() {
     statusLabel.textContent = "Status: Error (see log)";
   }
 
+  spinner.classList.remove("active");
   progressContainer.style.display = "none";
 }
 

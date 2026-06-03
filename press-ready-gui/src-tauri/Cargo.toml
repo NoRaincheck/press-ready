@@ -1,6 +1,6 @@
 [package]
 name = "press-ready-gui"
-version = "4.0.3"
+version = "5.0.0"
 description = "A GUI for press-ready PDF/X-1a conversion"
 authors = ["Yasuaki Uechi"]
 license = "Apache-2.0"

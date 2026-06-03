@@ -86,7 +86,7 @@ hr {
 }
 
 .path {
-  color: var(--overlay1);
+  color: var(--text);
   font-family: Menlo, Monaco, "Courier New", monospace;
   font-size: 12px;
   overflow: hidden;
@@ -167,6 +167,26 @@ button.primary:active {
 .status {
   color: var(--overlay1);
   font-size: 13px;
+}
+
+.spinner {
+  width: 13px;
+  height: 13px;
+  border: 2px solid var(--surface2);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  display: none;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner.active {
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 #progress-container {

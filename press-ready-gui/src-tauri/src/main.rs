@@ -75,13 +75,13 @@ fn check_dependencies() -> DepStatus {
         .arg("--version")
         .output()
         .ok()
-        .map_or(false, |o| o.status.success());
+        .is_some_and(|o| o.status.success());
 
     let pf = Command::new("which")
         .arg("pdffonts")
         .output()
         .ok()
-        .map_or(false, |o| o.status.success());
+        .is_some_and(|o| o.status.success());
 
     DepStatus {
         ghostscript: gs,
@@ -199,26 +199,22 @@ fn convert_pdf(
     let stderr_handle = thread::spawn(move || {
         let reader = BufReader::new(stderr);
         let mut collected = String::new();
-        let mut current_page: i32 = 0;
-        for line in reader.lines() {
-            if let Ok(line) = line {
-                collected.push_str(&line);
-                collected.push('\n');
+        for line in reader.lines().map_while(Result::ok) {
+            collected.push_str(&line);
+            collected.push('\n');
 
-                let trimmed = line.trim();
-                if let Some(num) = trimmed
-                    .strip_prefix("Page")
-                    .and_then(|s| s.trim().parse::<i32>().ok())
-                {
-                    current_page = num;
-                    let _ = window_clone.emit(
-                        "progress",
-                        serde_json::json!({
-                            "current": current_page,
-                            "total": total_pages_clone,
-                        }),
-                    );
-                }
+            let trimmed = line.trim();
+            if let Some(num) = trimmed
+                .strip_prefix("Page")
+                .and_then(|s| s.trim().parse::<i32>().ok())
+            {
+                let _ = window_clone.emit(
+                    "progress",
+                    serde_json::json!({
+                        "current": num,
+                        "total": total_pages_clone,
+                    }),
+                );
             }
         }
         collected
