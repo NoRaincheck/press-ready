@@ -55,6 +55,17 @@ Uses `@tauri-apps/api` imports:
 - `invoke` from `@tauri-apps/api/tauri` for Rust commands
 - `open`/`save` from `@tauri-apps/api/dialog` for native file dialogs
 
+## Formatting & Git Workflow
+
+- Always format code with **`deno fmt`** before committing (not Prettier).
+- After making changes, commit and push:
+  ```bash
+  deno fmt
+  git add -A
+  git commit -m "<message>"
+  git push
+  ```
+
 ## Tauri Config Notes
 
 - Dev server on port 1420 (Vite)
