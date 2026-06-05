@@ -155,6 +155,7 @@ fn convert_pdf(
         "-dMonoImageResolution=300".into(),
         format!("-sOutputFile={}", output),
         "-dNOSAFER".into(),
+        "-dAlignToPixels=0".into(),
     ];
 
     if boundary_boxes {
